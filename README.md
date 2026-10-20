@@ -4,10 +4,10 @@ Ce dépôt public distribue les APK signées de Meeko et leurs notes de version.
 
 ## Télécharger
 
-[Meeko 0.13.0-preview.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.13.0-preview.1)
+[Meeko 0.14.0-preview.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.14.0-preview.1)
 
-Android 7.0/API24 minimum ; version 0.13.0, build 18. Télécharger le fichier
-`meeko-0.13.0-preview.1-arm64.apk` dans les fichiers joints à la release.
+Android 7.0/API24 minimum ; version 0.14.0, build 19. Télécharger le fichier
+`meeko-0.14.0-preview.1-arm64.apk` dans les fichiers joints à la release.
 Les fichiers « Source code » générés par GitHub ne sont pas l’application.
 
 ## Préversion avec données fictives
