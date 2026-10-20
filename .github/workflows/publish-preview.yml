@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-meeko-v0.13.0-preview.1
+  group: publish-meeko-v0.14.0-preview.1
   cancel-in-progress: false
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          RELEASE_NOTES = "# Meeko — premier jet connecté\n\nVersion **0.13.0**, build **18**, Android ARM64/API24 minimum. Préversion de test avec données fictives uniquement.\n\nCette version se connecte au serveur HTTPS Meeko. Connexion privée, modification de profil, messages persistants avec réception en temps réel, proposition/confirmation indépendante de rendez-vous et copie des réglages ont été vérifiés contre le serveur actif. Aucun serveur de production ou véritable processus de vérification d'identité n'est ouvert.\n\n## Nouvelle expérience\n\nRefonte des parcours membres : découverte organisée, invitations, profil, messages, rendez-vous et outils de sécurité/données. Deux nouvelles photos d’ambiance originales et la police Manrope sont intégrées à l’APK, sans téléchargement à l’ouverture. Les images décoratives ne représentent ni un membre ni une présence réelle. Les réglages de l’application sont regroupés dans Mon espace. Le chat propose explicitement de préparer un rendez-vous, sans création automatique. Les limites du test sont accessibles depuis « À propos de cette version » ; le bandeau de données fictives reste permanent.\n\n## Installer\n\nTélécharger puis ouvrir `meeko-0.13.0-preview.1-arm64.apk`. Le même identifiant d'application et la même clé de signature sont utilisés que dans la démo précédente. Les identifiants des comptes fictifs sont fournis séparément par le propriétaire : aucun mot de passe n'est inclus ici.\n\nAvec les deux premiers comptes de test, ouvrir Messages pour retrouver une conversation fictive préchargée, envoyer un texte puis se connecter avec l'autre compte pour le lire. Le scénario initial est une donnée de test ; les nouvelles invitations nécessitent toujours deux décisions indépendantes. Les deux autres comptes permettent de tester la découverte après consentement et échantillons simulés explicites. Aucun GPS réel.\n\n## Périmètre\n\nLes inscriptions publiques, photos, audio, récupération et comptes de modération sont fermés sur cette préversion. Les signalements servent uniquement à tester les écrans et le stockage ; aucune équipe réelle ne les traite. Ne pas utiliser de données personnelles réelles. Certaines copies de données restent partielles.\n\nValidation : 650 tests Flutter, 476 tests backend avant le dernier durcissement du lanceur puis 42 cas ciblés, contrat Dart public HTTPS/WSS et tests de confidentialité. APK release signé, non débogable, HTTP en clair et sauvegardes désactivés, alignement natif vérifié. Les tests sur appareil Android réel, performance et permissions restent à réaliser. Le serveur de test n'a pas de redémarrage automatique après panne ou redémarrage de l'hôte.\n\nVérifier l'intégrité de l'APK avec le fichier SHA256SUMS fourni.\n\nSHA-256 de l’APK :\n\n```text\n4a4735f4ef7730c8a9a374ffae8d38a92fece22047ff65908fa155aebb46aaa2\n```\n"
+          RELEASE_NOTES = '# Meeko — préversion sombre et corail\n\nVersion **0.14.0**, build **19**. Android ARM64, Android 7.0/API24 minimum. APK signée avec la même clé que 0.13.0. Version de test avec comptes fictifs privés uniquement.\n\n## Interface\n\nConnexion classique : photo de fond animée par panoramique/zoom, identifiant et mot de passe, puis liens « Mot de passe oublié » et « Créer un compte ». L’animation s’arrête en arrière-plan et quand les animations sont réduites. Les liens expliquent les limites de la préversion ; ils n’ouvrent aucune inscription ou récupération sur le serveur de test.\n\nAccueil sombre et corail, radar abstrait sans personne ni localisation, navigation simplifiée et icônes cohérentes. Disponible maintenant ouvre les réglages avec consentement explicite ; une intention choisie prépare un brouillon du profil à enregistrer. Proposition compatible, profil complet autorisé, décisions indépendantes, conversation puis rendez-vous. Aucun cœur, like, swipe ou écran « C’est un match ! ». Les photos décoratives ne représentent pas un membre ; le profil utilise les photos privées autorisées ou une initiale honnête.\n\nChat en temps réel et rendez-vous sur le même backend HTTPS. Café/balade/repas changent uniquement l’aide à la saisie ; chacun choisit le lieu public et confirme lui-même. La saisie d’un profil et les brouillons de disponibilité conservent les protections de session et les confirmations de sortie.\n\n## Installer et essayer\n\nTélécharger puis ouvrir `meeko-0.14.0-preview.1-arm64.apk`, puis utiliser les identifiants fictifs remis séparément par le propriétaire. Aucun mot de passe ni clé de signature n’est fourni. Les deux premiers comptes permettent de tester une conversation fictive préchargée ; les autres gardent leurs étapes explicites de découverte réciproque. Vérifier SHA256SUMS avant installation.\n\n## Périmètre\n\nInscriptions publiques, photos/audio, GPS réel, récupération et comptes de modération fermés sur ce test. Les signalements servent au test et ne sont pas traités par une équipe réelle. Ne pas utiliser de données personnelles réelles. Aucun test sur téléphone physique ni mesure de performance n’est revendiqué. Le serveur de test n’a pas de redémarrage automatique après panne ou redémarrage de l’hôte.\n\nSource de l’APK : `61fc3ce`. Intégrité APK SHA256 : `c917947f333919227db629a6debc60a695b3a3850844f19577d4fbd04c2c04cc`.\n'
           import hashlib
           import io
           import json
@@ -37,13 +37,13 @@ jobs:
           import zipfile
 
           REPO = "Jhamende/meeko_android_releases"
-          TAG = "v0.13.0-preview.1"
-          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.13.0-preview.1-arm64.zip"
-          BUNDLE_SHA = "65746323015cc1b03b200ec805f36522ee01068cf5eb715483c3837d8a2406bf"
-          BUNDLE_BYTES = 27351321
-          APK = "meeko-0.13.0-preview.1-arm64.apk"
+          TAG = "v0.14.0-preview.1"
+          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.14.0-preview.1-arm64.zip"
+          BUNDLE_SHA = "c7ea19bed6d3cf4bf8e57877fb18fd8623e4e990955117d24f7fcbfbc0b59e5c"
+          BUNDLE_BYTES = 16499450
+          APK = "meeko-0.14.0-preview.1-arm64.apk"
           EXPECTED = {
-              APK: (27343476, "4a4735f4ef7730c8a9a374ffae8d38a92fece22047ff65908fa155aebb46aaa2"),
+              APK: (27343476, "c917947f333919227db629a6debc60a695b3a3850844f19577d4fbd04c2c04cc"),
               "FONT_LICENSE.txt": (4387, "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"),
           }
           API = "https://api.github.com/repos/" + REPO
@@ -104,7 +104,7 @@ jobs:
           if release is None:
               release = api_request("POST", API + "/releases", {
                   "tag_name": TAG, "target_commitish": os.environ["GITHUB_SHA"],
-                  "name": "Meeko 0.13.0-preview.1 — Android ARM64", "body": RELEASE_NOTES,
+                  "name": "Meeko 0.14.0-preview.1 — Android ARM64", "body": RELEASE_NOTES,
                   "draft": True, "prerelease": True, "make_latest": "false",
               })
           require(release["tag_name"] == TAG and release["prerelease"], "Unexpected release")
