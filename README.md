@@ -1,27 +1,27 @@
-# Meeko — versions Android de test
+# Meeko — pilote Android connecté
 
-Ce dépôt public distribue les APK signées de Meeko et leurs notes de version.
+[Installer Meeko0.17.0-pilot.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/download/v0.17.0-pilot.1/meeko-0.17.0-pilot.1-arm64.apk)
 
-## Télécharger
+[Notes, empreintes et licence](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.17.0-pilot.1)
 
-[Meeko 0.14.0-preview.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.14.0-preview.1)
+Android7.0/API24 minimum. Version0.17.0, build22, même clé de signature pour
+mettre à jour une ancienne version. Télécharger le fichier APK joint ; les archives
+« Source code » générées par GitHub ne sont pas l’application.
 
-Android 7.0/API24 minimum ; version 0.14.0, build 19. Télécharger le fichier
-`meeko-0.14.0-preview.1-arm64.apk` dans les fichiers joints à la release.
-Les fichiers « Source code » générés par GitHub ne sont pas l’application.
+Créer un compte personnel, puis suivre le wizard de profil. Inscription, connexion,
+profil, récupération par clé personnelle et suppression utilisent le backend réel.
+Les anciens comptes fictifs ne sont plus servis. Configurer sa clé de récupération
+dans Mon espace ; aucun email de réinitialisation automatique n’est envoyé.
 
-## Préversion avec données fictives
+Ce premier pilote ne déclare pas tout le cahier des charges déployé. Collecte de
+justificatifs et rencontres restent fermées jusqu’à la mise en service des opérateurs
+humains avec MFA, du recours indépendant et du stockage privé des preuves. Notifications
+sur consentement configurées ; réception et expérience sur téléphone encore à vérifier.
 
-La préversion utilise un serveur de test et des comptes privés fournis séparément
-par le propriétaire. Les inscriptions publiques, photos, audio, GPS réel,
-récupération et comptes de modération sont fermés. Ne pas saisir de données
-personnelles réelles. Aucune équipe de modération réelle n’est opérationnelle.
+Le dépôt et ses téléchargements sont publics. Une ouverture large nécessite encore
+la validation des opérations, de la sécurité, de la confidentialité et du cadre juridique.
 
-## Intégrité et licences
-
-Chaque release fournit `SHA256SUMS` et la licence Manrope `FONT_LICENSE.txt`.
-La signature Android existante est conservée pour permettre les mises à jour.
-Ce dépôt ne contient ni le code de l’application, ni clé de signature, ni
-identifiants de test. La tâche GitHub Actions transfère uniquement un artefact
-public déjà signé, après vérification de son empreinte ; elle ne compile ni
-ne signe l’application.
+Chaque release fournit SHA256SUMS et FONT_LICENSE.txt. Ce dépôt ne contient pas le
+code de l’application, de clé de signature ou de configuration privée. La tâche Actions
+transfère uniquement un APK déjà signé après vérification des empreintes ; elle ne
+compile ni ne signe l’application.
