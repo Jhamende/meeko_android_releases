@@ -1,20 +1,23 @@
 # Meeko — pilote Android connecté
 
-[Installer Meeko0.19.1-pilot.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/download/v0.19.1-pilot.1/meeko-0.19.1-pilot.1-arm64.apk)
+[Installer Meeko0.20.0-pilot.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/download/v0.20.0-pilot.1/meeko-0.20.0-pilot.1-arm64.apk)
 
-[Notes, empreintes et licence](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.19.1-pilot.1)
+[Notes, empreintes et licence](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.20.0-pilot.1)
 
-Android7.0/API24 minimum. Version0.19.1, build25, même clé de signature pour
+Android7.0/API24 minimum. Version0.20.0, build26, même clé de signature pour
 mettre à jour une ancienne version. Télécharger le fichier APK joint ; les archives
 « Source code » générées par GitHub ne sont pas l’application.
 
 Créer un compte avec une date de naissance privée, puis suivre le wizard de profil.
+Nouvel accueil Autour de toi, carte de secteur facultative et radar animé, propositions avec
+portrait et centres d’intérêt communs, profil en synthèse et disponibilité guidée.
+La carte respecte un choix contextuel distinct et ne place aucun membre à une position précise.
 Localisation privée et service Android en arrière-plan sont disponibles sur accord explicite,
 même en attendant le contrôle de majorité ; rencontres et profils restent soumis au contrôle.
 Les exigences de chaque champ sont affichées et les majuscules de l’identifiant normalisées. Inscription, connexion,
 profil, récupération par clé personnelle et suppression utilisent le backend réel.
 Les anciens comptes fictifs ne sont plus servis. Configurer sa clé de récupération
-dans Mon espace. L’email et sa vérification sont reportés à la demande du propriétaire.
+dans Profil → Réglages. L’email et sa vérification sont reportés à la demande du propriétaire.
 
 La localisation en arrière-plan utilise un indicateur Android et une action Pause.
 Activez-la dans les réglages de disponibilité ; nouvelle connexion et session limitée
