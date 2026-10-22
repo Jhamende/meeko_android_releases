@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-meeko-v0.17.0-pilot.1
+  group: publish-meeko-v0.18.0-pilot.1
   cancel-in-progress: false
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          RELEASE_NOTES = '# Meeko — premier pilote avec comptes réels\n\nVersion **0.17.0**, build **22**. Android ARM64, Android7.0/API24 minimum.\nAPK release signée avec la même clé que les versions précédentes.\n\n## Essayer\n\nInstallez `meeko-0.17.0-pilot.1-arm64.apk`, puis choisissez **Créer un compte**.\nLes anciens identifiants fictifs ne fonctionnent plus sur le nouveau serveur.\nChoisissez un identifiant et un mot de passe d’au moins12 caractères, confirmez\nvotre majorité et lisez les informations sur vos données.\n\nLe wizard guide la présentation, les intentions (dont les objectifs de rencontre)\net les centres d’intérêt. Un profil incomplet reprend ce parcours à la connexion,\nà la restauration de session ou depuis l’accueil. Les choix enregistrés sont\nconservés sur le backend HTTPS réel, sans proposition ni conversation inventée.\n\nDans Mon espace : profil/préférences, session mémorisée sur choix explicite,\nclé de récupération, outils de données et suppression du compte. La récupération\nde mot de passe utilise une clé personnelle à configurer et garder en lieu sûr ;\nelle n’envoie pas d’email automatique. Firebase sert aux notifications sur consentement,\npas à l’authentification. La réception sur téléphone reste à vérifier.\n\n## Périmètre de ce premier pilote\n\nInscription, connexion, onboarding, profil, récupération et suppression utilisent\nle serveur réel. La majorité n’est jamais validée par une simple déclaration.\nLa collecte de justificatifs et les rencontres restent fermées tant que les\nopérateurs humains avec MFA, le recours indépendant et le stockage privé des\npreuves ne sont pas opérationnels. Le code des propositions mutuelles, du chat,\ndes rendez-vous et du contrôle interne existe ; ce pilote ne déclare pas\nl’ensemble du cahier des charges livré en production.\n\nLes opérations de sauvegarde/supervision et la validation sécurité, juridique,\nconfidentialité et Android physique restent à finaliser avant une ouverture large.\nAucun résultat sur téléphone physique ou mesure de performance n’est revendiqué.\nLe dépôt et ce téléchargement sont publics ; cela ne réserve pas l’inscription\nau seul propriétaire.\n\n## Vérifications\n\n659 tests backend et771 tests Flutter passent sur les sources. Le client Dart\npasse le parcours inscription/profil/récupération/suppression contre le vrai HTTPS.\nSignature et certificat existants, version, APK non débogable, API réelle, assets,\nalignement natif16K et absence des secrets serveur sont vérifiés sur l’artefact.\n\nSource : `9a814b5`. SHA256 APK : `a57bf118383b86303e9651cb7fbfd456d9095694a19afdb94f4c42c1653a3ea1`.\nLe fichier SHA256SUMS accompagne l’APK et la licence Manrope.\n'
+          RELEASE_NOTES = '# Meeko — inscription avec date de naissance\n\nVersion **0.18.0**, build **23**, Android ARM64/API24 minimum. APK release signée\navec la même clé : installez-la pour mettre à jour la version précédente.\n\nL’inscription demande maintenant une **date de naissance privée**, avec saisie locale\nou sélecteur de date. Le serveur calcule l’âge automatiquement aux anniversaires et\nrefuse les dates invalides ou mineures. Seul l’âge apparaît dans les profils autorisés.\nLes comptes existants sont conservés ; aucune date de naissance n’est inventée.\n\nLes erreurs indiquent le champ à corriger et le formulaire y revient. Le mot de passe\ndoit comporter12 à128 caractères et sa confirmation doit correspondre. Les majuscules\nd’un identifiant sont normalisées ; les espaces autour sont ignorés. Confirmez votre\nmajorité et ouvrez « Mes données et mes choix » avant de cocher la lecture.\nAprès création du compte, le wizard guide présentation, intentions et centres d’intérêt.\n\n**L’email et sa vérification sont reportés à la demande du propriétaire.** Configurez\net conservez la clé de récupération dans Mon espace. Firebase sert aux notifications\nsur consentement, pas à l’authentification.\n\nInscription, connexion, profil, récupération, export privé et suppression utilisent\nle backend réel. Les justificatifs et rencontres restent fermés jusqu’à la mise en\nservice du contrôle humain avec MFA, du recours indépendant et du stockage privé des\npreuves. Déclarer une date de naissance ne vérifie pas la majorité. Ce pilote ne\ndéclare pas tout le cahier des charges déployé ; téléphone, opérations et validation\njuridique/confidentialité/sécurité restent à finaliser avant une ouverture large.\n\nVérification des679 tests backend et777 tests Flutter par suite complète puis reprises\nciblées après corrections. Contrat Dart/API réel, migration additive, confidentialité,\nsignature existante, manifest, assets, API HTTPS, alignement16K et absence des secrets\nserveur contrôlés. Aucun résultat sur téléphone physique n’est revendiqué.\n\nSource : `531b12b`. SHA256 APK : `feaa03ec8e788f9ff70af85d166cff6f0770568dd588f51df10aead04f796205`.\nLes fichiers SHA256SUMS et FONT_LICENSE.txt accompagnent l’APK. Les téléchargements\net ce dépôt sont publics ; aucun code de l’application ou secret n’est publié.\n'
           import hashlib
           import io
           import json
@@ -37,13 +37,13 @@ jobs:
           import zipfile
 
           REPO = "Jhamende/meeko_android_releases"
-          TAG = "v0.17.0-pilot.1"
-          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.17.0-pilot.1-arm64.zip"
-          BUNDLE_SHA = "33e531776ba2f91e7ef82c1cd7f972c685ecb507b4d3392662326004c75c3288"
-          BUNDLE_BYTES = 16360279
-          APK = "meeko-0.17.0-pilot.1-arm64.apk"
+          TAG = "v0.18.0-pilot.1"
+          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.18.0-pilot.1-arm64.zip"
+          BUNDLE_SHA = "8c0afe0a297d5a40eccd47217c65fcd2c91f235a324ff58cd12ea9df72754579"
+          BUNDLE_BYTES = 16364809
+          APK = "meeko-0.18.0-pilot.1-arm64.apk"
           EXPECTED = {
-              APK: (28144181, "a57bf118383b86303e9651cb7fbfd456d9095694a19afdb94f4c42c1653a3ea1"),
+              APK: (28144181, "feaa03ec8e788f9ff70af85d166cff6f0770568dd588f51df10aead04f796205"),
               "FONT_LICENSE.txt": (4387, "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"),
           }
           API = "https://api.github.com/repos/" + REPO
@@ -104,7 +104,7 @@ jobs:
           if release is None:
               release = api_request("POST", API + "/releases", {
                   "tag_name": TAG, "target_commitish": os.environ["GITHUB_SHA"],
-                  "name": "Meeko 0.17.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
+                  "name": "Meeko 0.18.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
                   "draft": True, "prerelease": True, "make_latest": "false",
               })
           require(release["tag_name"] == TAG and release["prerelease"], "Unexpected release")
