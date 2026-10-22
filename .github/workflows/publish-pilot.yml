@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-meeko-v0.18.0-pilot.1
+  group: publish-meeko-v0.19.0-pilot.1
   cancel-in-progress: false
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          RELEASE_NOTES = '# Meeko — inscription avec date de naissance\n\nVersion **0.18.0**, build **23**, Android ARM64/API24 minimum. APK release signée\navec la même clé : installez-la pour mettre à jour la version précédente.\n\nL’inscription demande maintenant une **date de naissance privée**, avec saisie locale\nou sélecteur de date. Le serveur calcule l’âge automatiquement aux anniversaires et\nrefuse les dates invalides ou mineures. Seul l’âge apparaît dans les profils autorisés.\nLes comptes existants sont conservés ; aucune date de naissance n’est inventée.\n\nLes erreurs indiquent le champ à corriger et le formulaire y revient. Le mot de passe\ndoit comporter12 à128 caractères et sa confirmation doit correspondre. Les majuscules\nd’un identifiant sont normalisées ; les espaces autour sont ignorés. Confirmez votre\nmajorité et ouvrez « Mes données et mes choix » avant de cocher la lecture.\nAprès création du compte, le wizard guide présentation, intentions et centres d’intérêt.\n\n**L’email et sa vérification sont reportés à la demande du propriétaire.** Configurez\net conservez la clé de récupération dans Mon espace. Firebase sert aux notifications\nsur consentement, pas à l’authentification.\n\nInscription, connexion, profil, récupération, export privé et suppression utilisent\nle backend réel. Les justificatifs et rencontres restent fermés jusqu’à la mise en\nservice du contrôle humain avec MFA, du recours indépendant et du stockage privé des\npreuves. Déclarer une date de naissance ne vérifie pas la majorité. Ce pilote ne\ndéclare pas tout le cahier des charges déployé ; téléphone, opérations et validation\njuridique/confidentialité/sécurité restent à finaliser avant une ouverture large.\n\nVérification des679 tests backend et777 tests Flutter par suite complète puis reprises\nciblées après corrections. Contrat Dart/API réel, migration additive, confidentialité,\nsignature existante, manifest, assets, API HTTPS, alignement16K et absence des secrets\nserveur contrôlés. Aucun résultat sur téléphone physique n’est revendiqué.\n\nSource : `531b12b`. SHA256 APK : `feaa03ec8e788f9ff70af85d166cff6f0770568dd588f51df10aead04f796205`.\nLes fichiers SHA256SUMS et FONT_LICENSE.txt accompagnent l’APK. Les téléchargements\net ce dépôt sont publics ; aucun code de l’application ou secret n’est publié.\n'
+          RELEASE_NOTES = '# Meeko — localisation privée et arrière-plan\n\nVersion **0.19.0**, build **24**, Android ARM64/API24 minimum. Même signature :\ninstallez cette APK sur la précédente, sans désinstaller ni recréer votre compte.\n\n## Activer\n\nReconnectez-vous pour bénéficier d’une nouvelle session pouvant durer8 heures.\nComplétez le profil, puis ouvrez vos réglages de disponibilité depuis l’accueil.\nAutorisez la localisation approximative Android, activez votre disponibilité et\n**enregistrez** ces choix. L’actualisation manuelle de la zone permet un premier essai.\n\nOuvrez **Découverte en arrière-plan**. Autorisez l’indicateur Android, cochez le choix\nd’activation et appuyez sur **Activer sur cet appareil**. Une notification Meeko reste\nvisible avec l’action **Mettre en pause**. Le service peut continuer quand l’application\nn’est plus affichée ou que l’écran est éteint. La durée réelle reste limitée par la\nsession, à8 heures maximum ; l’heure de fin est affichée. Android, les réglages de\nbatterie ou l’arrêt forcé peuvent interrompre le service. Aucune relance cachée ou\nautomatique au redémarrage n’est mise en place.\n\n« Service actif · position en attente » se distingue d’une zone réellement reçue par\nle serveur. Une coupure réseau ne produit pas de faux succès. Le fournisseur fusionné\nAndroid est utilisé lorsqu’il est disponible, avec repli réseau ; aucun accès précis\nou « toujours autoriser » n’est demandé. Seule une zone approximative quitte le\ncode natif, jamais un trajet GPS, une position d’un autre membre ou une distance.\n\nUn adulte avec profil complet peut activer sa localisation privée avant le contrôle\nhumain de majorité. Il reste exclu des propositions et des contacts tant qu’il n’est\npas contrôlé. Les comptes restreints/refusés/en cours de contrôle restent bloqués\npour la collecte. Déclarer une date de naissance ne vérifie pas la majorité.\nUn diagnostic local est également proposé quand l’envoi ne peut pas être activé.\n\n## Vérifications et limites\n\n684 tests backend complets plus2 cas de session,784 tests Flutter complets,15 cas UI\nfinaux, analyse statique,57 contrôles JVM et contrats Dart/HTTP réels passent.\nLe parcours public teste aussi l’envoi privé sur compte non contrôlé, l’absence de\npropositions, la pause, la révocation, la récupération et la suppression du compte.\nLes positions de test sont artificielles ; aucun comportement sur téléphone physique,\nmesure de batterie ou fonctionnement continu n’est revendiqué.\n\nLe backend réel conserve les comptes existants. Les rencontres attendent toujours\nla mise en service des opérateurs humains avec MFA, du recours indépendant et du\nstockage privé des justificatifs. Ce pilote ne déclare pas tout le cahier des charges\nlivré en production. Email et vérification email restent reportés ; configurez votre\nclé personnelle de récupération dans Mon espace.\n\nAPK signée avec la clé existante, API HTTPS, manifest, assets, alignement16K et absence\ndes secrets serveur contrôlés. Source `cace239`. SHA256 APK : `7eb6125a0bb121986e5fd10bf02952933db7f1bb7939a4f6d49e6e7b840770d0`.\nSHA256SUMS et FONT_LICENSE.txt accompagnent l’APK. Le dépôt est public ; le code de\nl’application, les clés et les configurations privées ne sont pas publiés.\n'
           import hashlib
           import io
           import json
@@ -37,13 +37,13 @@ jobs:
           import zipfile
 
           REPO = "Jhamende/meeko_android_releases"
-          TAG = "v0.18.0-pilot.1"
-          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.18.0-pilot.1-arm64.zip"
-          BUNDLE_SHA = "8c0afe0a297d5a40eccd47217c65fcd2c91f235a324ff58cd12ea9df72754579"
-          BUNDLE_BYTES = 16364809
-          APK = "meeko-0.18.0-pilot.1-arm64.apk"
+          TAG = "v0.19.0-pilot.1"
+          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.19.0-pilot.1-arm64.zip"
+          BUNDLE_SHA = "4e3960b572feb481e2a652e5e705c3a117924197df7f96b84d48158010484fb6"
+          BUNDLE_BYTES = 16374414
+          APK = "meeko-0.19.0-pilot.1-arm64.apk"
           EXPECTED = {
-              APK: (28144181, "feaa03ec8e788f9ff70af85d166cff6f0770568dd588f51df10aead04f796205"),
+              APK: (28144181, "7eb6125a0bb121986e5fd10bf02952933db7f1bb7939a4f6d49e6e7b840770d0"),
               "FONT_LICENSE.txt": (4387, "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"),
           }
           API = "https://api.github.com/repos/" + REPO
@@ -104,7 +104,7 @@ jobs:
           if release is None:
               release = api_request("POST", API + "/releases", {
                   "tag_name": TAG, "target_commitish": os.environ["GITHUB_SHA"],
-                  "name": "Meeko 0.18.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
+                  "name": "Meeko 0.19.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
                   "draft": True, "prerelease": True, "make_latest": "false",
               })
           require(release["tag_name"] == TAG and release["prerelease"], "Unexpected release")
