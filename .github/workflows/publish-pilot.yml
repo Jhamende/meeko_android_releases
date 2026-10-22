@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-meeko-v0.19.1-pilot.1
+  group: publish-meeko-v0.20.0-pilot.1
   cancel-in-progress: false
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          RELEASE_NOTES = '# Meeko — localisation privée et arrière-plan\n\nVersion **0.19.1**, build **25**, Android ARM64/API24 minimum. Même signature :\ninstallez cette APK sur la précédente, sans désinstaller ni recréer votre compte.\n\n## Activer\n\nReconnectez-vous pour bénéficier d’une nouvelle session pouvant durer8 heures.\nComplétez le profil, puis ouvrez vos réglages de disponibilité depuis l’accueil.\nAutorisez la localisation approximative Android, activez votre disponibilité et\n**enregistrez** ces choix. L’actualisation manuelle de la zone permet un premier essai.\n\nOuvrez **Découverte en arrière-plan**. Autorisez l’indicateur Android, cochez le choix\nd’activation et appuyez sur **Activer sur cet appareil**. Une notification Meeko reste\nvisible avec l’action **Mettre en pause**. Le service peut continuer quand l’application\nn’est plus affichée ou que l’écran est éteint. La durée réelle reste limitée par la\nsession, à8 heures maximum ; l’heure de fin est affichée. Android, les réglages de\nbatterie ou l’arrêt forcé peuvent interrompre le service. Aucune relance cachée ou\nautomatique au redémarrage n’est mise en place.\n\n« Service actif · position en attente » se distingue d’une zone réellement reçue par\nle serveur. Une coupure réseau ne produit pas de faux succès. Le fournisseur fusionné\nAndroid est utilisé lorsqu’il est disponible, avec repli réseau ; aucun accès précis\nou « toujours autoriser » n’est demandé. Seule une zone approximative quitte le\ncode natif, jamais un trajet GPS, une position d’un autre membre ou une distance.\n\nUn adulte avec profil complet peut activer sa localisation privée avant le contrôle\nhumain de majorité. Il reste exclu des propositions et des contacts tant qu’il n’est\npas contrôlé. Les comptes restreints/refusés/en cours de contrôle restent bloqués\npour la collecte. Déclarer une date de naissance ne vérifie pas la majorité.\nUn diagnostic local est également proposé quand l’envoi ne peut pas être activé.\n\nLa version0.19.1 corrige également le bouton de disponibilité de l’accueil pour\nouvrir la localisation privée avant le contrôle de majorité. La navigation vers les\nconversations reste protégée ; cette correction est testée dans le parcours connecté.\n\n## Vérifications et limites\n\n684 tests backend complets plus2 cas de session et784 tests Flutter complets passent.\nAprès les15 cas UI finaux,37 tests de navigation/disponibilité/arrière-plan/diagnostic\nvalident la correction0.19.1. Analyse statique,57 contrôles JVM et contrats Dart/HTTP\nréels passent. Les suites complètes précèdent la dernière correction du bouton.\nLe parcours public teste aussi l’envoi privé sur compte non contrôlé, l’absence de\npropositions, la pause, la révocation, la récupération et la suppression du compte.\nLes positions de test sont artificielles ; aucun comportement sur téléphone physique,\nmesure de batterie ou fonctionnement continu n’est revendiqué.\n\nLe backend réel conserve les comptes existants. Les rencontres attendent toujours\nla mise en service des opérateurs humains avec MFA, du recours indépendant et du\nstockage privé des justificatifs. Ce pilote ne déclare pas tout le cahier des charges\nlivré en production. Email et vérification email restent reportés ; configurez votre\nclé personnelle de récupération dans Mon espace.\n\nAPK signée avec la clé existante, API HTTPS, manifest, assets, alignement16K et absence\ndes secrets serveur contrôlés. Source `ea7896d`. SHA256 APK : `185b475f25a68371f0a3b3dc8ce5b3bfeedab67e27a292fe1368ae52bbc85b9c`.\nSHA256SUMS et FONT_LICENSE.txt accompagnent l’APK. Le dépôt est public ; le code de\nl’application, les clés et les configurations privées ne sont pas publiés.\n'
+          RELEASE_NOTES = '# Meeko0.20.0 — Autour de toi\n\nNouvelle version Android connectée0.20.0+26, ARM64, Android7.0 minimum. Même signature : installation par-dessus le pilote précédent.\n\n- Accueil adapté à ton état : profil à compléter, contrôle18+, disponibilité, zone à actualiser et propositions.\n- Carte OpenStreetMap facultative avec information avant activation et radar animé. Uniquement ton secteur large ; aucune position individuelle d’un autre membre.\n- Propositions avec prénom, âge, portrait approuvé et partagé et centres d’intérêt communs. Le profil complet précède toujours la décision indépendante de chacun.\n- Profil personnel en synthèse avant édition, photos proposées dans le wizard, disponibilité guidée et accès aux réglages avancés.\n- Navigation en quatre espaces, actions de décision accessibles en pied, portraits autorisés dans les conversations et introductions allégées.\n- Actualisation immédiate au retour à l’accueil ou après modification de disponibilité ; chargement visible et protection des sessions/retours tardifs.\n\nInscription avec date de naissance privée, connexion, profil, récupération par clé et suppression utilisent le backend réel. Aucun faux membre ou mode simulation. Email reporté à la demande du propriétaire.\n\nLe contrôle humain de majorité, la revue photo, le recours indépendant et leurs opérations privées restent à mettre en service : les rencontres ne sont pas débloquées artificiellement. Tu peux préparer ton compte et ta localisation privée en attendant. Les photos non validées restent privées. La localisation Android en arrière-plan exige une activation séparée, un indicateur et dispose de Pause ; elle est limitée à la session et peut être interrompue par Android.\n\nLa carte reçoit IP et tuiles du secteur après accord ; cache locale souple20Mo, attribution OpenStreetMap/ODbL. Les rendus automatisés utilisent un fond de test, sans contacter les serveurs cartographiques. Validation sur téléphone, réception FCM et performances restent à faire. Cette release ne déclare pas tout le cahier des charges accepté.\n\nVérifications :699 tests backend,804 tests Flutter, analyse statique et9 cas HTTP réels passent.20 captures synthétiques ont été contrôlées.\n\nSources figées : `399620e`. APK signé, manifeste privé/HTTPS, signature existante, bibliothèques16K, assets et absence de clés serveur vérifiés avant publication.\n\nSHA256 de l’APK : `8e1253a0f91b224126e63ffdb34d701252a939d17525d0d9513f8fc95640845d`. Télécharger le fichier APK joint ; les archives « Source code » de GitHub ne sont pas l’application.\n'
           import hashlib
           import io
           import json
@@ -37,13 +37,13 @@ jobs:
           import zipfile
 
           REPO = "Jhamende/meeko_android_releases"
-          TAG = "v0.19.1-pilot.1"
-          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.19.1-pilot.1-arm64.zip"
-          BUNDLE_SHA = "9896cc6fddede2cddf8c47a9e4abf76ef035b9706f001e0e39acec5e5af35d72"
-          BUNDLE_BYTES = 16374650
-          APK = "meeko-0.19.1-pilot.1-arm64.apk"
+          TAG = "v0.20.0-pilot.1"
+          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.20.0-pilot.1-arm64.zip"
+          BUNDLE_SHA = "b8b767d2f064ff91afb85f45f9d794b225fef7117095f1f924780f0ea1c68abb"
+          BUNDLE_BYTES = 16604286
+          APK = "meeko-0.20.0-pilot.1-arm64.apk"
           EXPECTED = {
-              APK: (28144181, "185b475f25a68371f0a3b3dc8ce5b3bfeedab67e27a292fe1368ae52bbc85b9c"),
+              APK: (28672685, "8e1253a0f91b224126e63ffdb34d701252a939d17525d0d9513f8fc95640845d"),
               "FONT_LICENSE.txt": (4387, "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"),
           }
           API = "https://api.github.com/repos/" + REPO
@@ -104,7 +104,7 @@ jobs:
           if release is None:
               release = api_request("POST", API + "/releases", {
                   "tag_name": TAG, "target_commitish": os.environ["GITHUB_SHA"],
-                  "name": "Meeko 0.19.1-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
+                  "name": "Meeko 0.20.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
                   "draft": True, "prerelease": True, "make_latest": "false",
               })
           require(release["tag_name"] == TAG and release["prerelease"], "Unexpected release")
