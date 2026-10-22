@@ -1,0 +1,135 @@
+name: Publish signed Meeko connected account pilot
+
+'on':
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-pilot.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-meeko-v0.17.0-pilot.1
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'Jhamende/meeko_android_releases'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verify and publish the previously signed APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          RELEASE_NOTES = '# Meeko — premier pilote avec comptes réels\n\nVersion **0.17.0**, build **22**. Android ARM64, Android7.0/API24 minimum.\nAPK release signée avec la même clé que les versions précédentes.\n\n## Essayer\n\nInstallez `meeko-0.17.0-pilot.1-arm64.apk`, puis choisissez **Créer un compte**.\nLes anciens identifiants fictifs ne fonctionnent plus sur le nouveau serveur.\nChoisissez un identifiant et un mot de passe d’au moins12 caractères, confirmez\nvotre majorité et lisez les informations sur vos données.\n\nLe wizard guide la présentation, les intentions (dont les objectifs de rencontre)\net les centres d’intérêt. Un profil incomplet reprend ce parcours à la connexion,\nà la restauration de session ou depuis l’accueil. Les choix enregistrés sont\nconservés sur le backend HTTPS réel, sans proposition ni conversation inventée.\n\nDans Mon espace : profil/préférences, session mémorisée sur choix explicite,\nclé de récupération, outils de données et suppression du compte. La récupération\nde mot de passe utilise une clé personnelle à configurer et garder en lieu sûr ;\nelle n’envoie pas d’email automatique. Firebase sert aux notifications sur consentement,\npas à l’authentification. La réception sur téléphone reste à vérifier.\n\n## Périmètre de ce premier pilote\n\nInscription, connexion, onboarding, profil, récupération et suppression utilisent\nle serveur réel. La majorité n’est jamais validée par une simple déclaration.\nLa collecte de justificatifs et les rencontres restent fermées tant que les\nopérateurs humains avec MFA, le recours indépendant et le stockage privé des\npreuves ne sont pas opérationnels. Le code des propositions mutuelles, du chat,\ndes rendez-vous et du contrôle interne existe ; ce pilote ne déclare pas\nl’ensemble du cahier des charges livré en production.\n\nLes opérations de sauvegarde/supervision et la validation sécurité, juridique,\nconfidentialité et Android physique restent à finaliser avant une ouverture large.\nAucun résultat sur téléphone physique ou mesure de performance n’est revendiqué.\nLe dépôt et ce téléchargement sont publics ; cela ne réserve pas l’inscription\nau seul propriétaire.\n\n## Vérifications\n\n659 tests backend et771 tests Flutter passent sur les sources. Le client Dart\npasse le parcours inscription/profil/récupération/suppression contre le vrai HTTPS.\nSignature et certificat existants, version, APK non débogable, API réelle, assets,\nalignement natif16K et absence des secrets serveur sont vérifiés sur l’artefact.\n\nSource : `9a814b5`. SHA256 APK : `a57bf118383b86303e9651cb7fbfd456d9095694a19afdb94f4c42c1653a3ea1`.\nLe fichier SHA256SUMS accompagne l’APK et la licence Manrope.\n'
+          import hashlib
+          import io
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          import zipfile
+
+          REPO = "Jhamende/meeko_android_releases"
+          TAG = "v0.17.0-pilot.1"
+          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.17.0-pilot.1-arm64.zip"
+          BUNDLE_SHA = "33e531776ba2f91e7ef82c1cd7f972c685ecb507b4d3392662326004c75c3288"
+          BUNDLE_BYTES = 16360279
+          APK = "meeko-0.17.0-pilot.1-arm64.apk"
+          EXPECTED = {
+              APK: (28144181, "a57bf118383b86303e9651cb7fbfd456d9095694a19afdb94f4c42c1653a3ea1"),
+              "FONT_LICENSE.txt": (4387, "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"),
+          }
+          API = "https://api.github.com/repos/" + REPO
+
+          def require(condition, message):
+              if not condition:
+                  raise RuntimeError(message)
+
+          def public_download(url, maximum):
+              require(urllib.parse.urlsplit(url).scheme == "https", "HTTPS required")
+              with urllib.request.urlopen(url, timeout=120) as response:
+                  require(urllib.parse.urlsplit(response.url).scheme == "https", "HTTPS redirect required")
+                  data = response.read(maximum + 1)
+              require(len(data) <= maximum, "Download size exceeded")
+              return data
+
+          bundle = public_download(BUNDLE, BUNDLE_BYTES)
+          require(len(bundle) == BUNDLE_BYTES, "Bundle size mismatch")
+          require(hashlib.sha256(bundle).hexdigest() == BUNDLE_SHA, "Bundle hash mismatch")
+          with zipfile.ZipFile(io.BytesIO(bundle)) as archive:
+              names = archive.namelist()
+              require(len(names) == 4 and set(names) == {APK, "SHA256SUMS", "FONT_LICENSE.txt", "RELEASE_NOTES.md"}, "Unexpected bundle contents")
+              for name, (size, digest) in EXPECTED.items():
+                  require(archive.getinfo(name).file_size == size, "Unexpected member size")
+              assets = {name: archive.read(name) for name in (APK, "SHA256SUMS", "FONT_LICENSE.txt")}
+          for name, (size, digest) in EXPECTED.items():
+              require(len(assets[name]) == size and hashlib.sha256(assets[name]).hexdigest() == digest, "Asset integrity mismatch: " + name)
+          sums = "".join(digest + "  " + name + "\n" for name, (size, digest) in EXPECTED.items()).encode()
+          require(assets["SHA256SUMS"] == sums, "Checksum manifest mismatch")
+          print("Verified signed APK bytes, font license and checksum manifest.")
+          if "--verify-only" in sys.argv:
+              sys.exit(0)
+
+          require(os.environ.get("GITHUB_REPOSITORY") == REPO, "Wrong release repository")
+          token = os.environ["GH_TOKEN"]
+
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  return None
+
+          opener = urllib.request.build_opener(NoRedirect())
+
+          def api_request(method, url, payload=None, content_type="application/json", missing=False):
+              host = urllib.parse.urlsplit(url)
+              require(host.scheme == "https" and host.netloc in {"api.github.com", "uploads.github.com"}, "Untrusted authenticated endpoint")
+              data = json.dumps(payload).encode() if isinstance(payload, dict) else payload
+              headers = {"Authorization": "Bearer " + token, "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "Content-Type": content_type, "User-Agent": "Meeko-signed-preview-publisher"}
+              request = urllib.request.Request(url, data=data, headers=headers, method=method)
+              try:
+                  with opener.open(request, timeout=120) as response:
+                      return json.load(response)
+              except urllib.error.HTTPError as error:
+                  if missing and error.code == 404:
+                      return None
+                  raise RuntimeError("GitHub " + method + " failed with HTTP " + str(error.code)) from None
+
+          release = api_request("GET", API + "/releases/tags/" + TAG, missing=True)
+          if release is None:
+              release = api_request("POST", API + "/releases", {
+                  "tag_name": TAG, "target_commitish": os.environ["GITHUB_SHA"],
+                  "name": "Meeko 0.17.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
+                  "draft": True, "prerelease": True, "make_latest": "false",
+              })
+          require(release["tag_name"] == TAG and release["prerelease"], "Unexpected release")
+          existing = api_request("GET", API + "/releases/" + str(release["id"]) + "/assets?per_page=100")
+          by_name = {item["name"]: item for item in existing}
+          require(len(by_name) == len(existing) and set(by_name) <= set(assets), "Unexpected existing release assets")
+          upload = release["upload_url"].split("{", 1)[0]
+          require(upload == "https://uploads.github.com/repos/" + REPO + "/releases/" + str(release["id"]) + "/assets", "Unexpected upload URL")
+          for name, data in assets.items():
+              item = by_name.get(name)
+              digest = "sha256:" + hashlib.sha256(data).hexdigest()
+              if item is None:
+                  require(release["draft"], "Published release is incomplete; refusing mutation")
+                  item = api_request("POST", upload + "?" + urllib.parse.urlencode({"name": name}), data, "application/vnd.android.package-archive" if name.endswith(".apk") else "text/plain; charset=utf-8")
+              require(item["name"] == name and item["size"] == len(data) and item["state"] == "uploaded", "Uploaded asset metadata mismatch")
+              require(item.get("digest") == digest, "GitHub asset digest mismatch")
+          if release["draft"]:
+              release = api_request("PATCH", API + "/releases/" + str(release["id"]), {"draft": False, "prerelease": True, "body": RELEASE_NOTES, "make_latest": "false"})
+          require(not release["draft"] and release["prerelease"], "Release was not published as a prerelease")
+          require(release["body"] == RELEASE_NOTES, "Published notes mismatch")
+          for name, data in assets.items():
+              url = "https://github.com/" + REPO + "/releases/download/" + TAG + "/" + name
+              downloaded = public_download(url, len(data))
+              require(hashlib.sha256(downloaded).digest() == hashlib.sha256(data).digest(), "Published download integrity mismatch")
+              print("Verified public download: " + name)
+          print("Published " + release["html_url"])
+
+          PY
