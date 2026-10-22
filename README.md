@@ -1,17 +1,18 @@
 # Meeko — pilote Android connecté
 
-[Installer Meeko0.17.0-pilot.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/download/v0.17.0-pilot.1/meeko-0.17.0-pilot.1-arm64.apk)
+[Installer Meeko0.18.0-pilot.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/download/v0.18.0-pilot.1/meeko-0.18.0-pilot.1-arm64.apk)
 
-[Notes, empreintes et licence](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.17.0-pilot.1)
+[Notes, empreintes et licence](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.18.0-pilot.1)
 
-Android7.0/API24 minimum. Version0.17.0, build22, même clé de signature pour
+Android7.0/API24 minimum. Version0.18.0, build23, même clé de signature pour
 mettre à jour une ancienne version. Télécharger le fichier APK joint ; les archives
 « Source code » générées par GitHub ne sont pas l’application.
 
-Créer un compte personnel, puis suivre le wizard de profil. Inscription, connexion,
+Créer un compte avec une date de naissance privée, puis suivre le wizard de profil.
+Les exigences de chaque champ sont affichées et les majuscules de l’identifiant normalisées. Inscription, connexion,
 profil, récupération par clé personnelle et suppression utilisent le backend réel.
 Les anciens comptes fictifs ne sont plus servis. Configurer sa clé de récupération
-dans Mon espace ; aucun email de réinitialisation automatique n’est envoyé.
+dans Mon espace. L’email et sa vérification sont reportés à la demande du propriétaire.
 
 Ce premier pilote ne déclare pas tout le cahier des charges déployé. Collecte de
 justificatifs et rencontres restent fermées jusqu’à la mise en service des opérateurs
