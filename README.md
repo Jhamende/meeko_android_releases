@@ -1,15 +1,15 @@
 # Meeko — pilote Android connecté
 
-[Installer Meeko0.20.0-pilot.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/download/v0.20.0-pilot.1/meeko-0.20.0-pilot.1-arm64.apk)
+[Installer Meeko0.21.0-pilot.1 — APK Android ARM64](https://github.com/Jhamende/meeko_android_releases/releases/download/v0.21.0-pilot.1/meeko-0.21.0-pilot.1-arm64.apk)
 
-[Notes, empreintes et licence](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.20.0-pilot.1)
+[Notes, empreintes et licence](https://github.com/Jhamende/meeko_android_releases/releases/tag/v0.21.0-pilot.1)
 
-Android7.0/API24 minimum. Version0.20.0, build26, même clé de signature pour
+Android7.0/API24 minimum. Version0.21.0, build27, même clé de signature pour
 mettre à jour une ancienne version. Télécharger le fichier APK joint ; les archives
 « Source code » générées par GitHub ne sont pas l’application.
 
 Créer un compte avec une date de naissance privée, puis suivre le wizard de profil.
-Nouvel accueil Autour de toi, carte de secteur facultative et radar animé, propositions avec
+Préférences privées par intention et rayon approximatif réglable, avec compatibilité réciproque. Nouvel accueil Autour de toi, carte de secteur facultative et radar animé, propositions avec
 portrait et centres d’intérêt communs, profil en synthèse et disponibilité guidée.
 La carte respecte un choix contextuel distinct et ne place aucun membre à une position précise.
 Localisation privée et service Android en arrière-plan sont disponibles sur accord explicite,
