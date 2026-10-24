@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-meeko-v0.20.0-pilot.1
+  group: publish-meeko-v0.21.0-pilot.1
   cancel-in-progress: false
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          RELEASE_NOTES = '# Meeko0.20.0 — Autour de toi\n\nNouvelle version Android connectée0.20.0+26, ARM64, Android7.0 minimum. Même signature : installation par-dessus le pilote précédent.\n\n- Accueil adapté à ton état : profil à compléter, contrôle18+, disponibilité, zone à actualiser et propositions.\n- Carte OpenStreetMap facultative avec information avant activation et radar animé. Uniquement ton secteur large ; aucune position individuelle d’un autre membre.\n- Propositions avec prénom, âge, portrait approuvé et partagé et centres d’intérêt communs. Le profil complet précède toujours la décision indépendante de chacun.\n- Profil personnel en synthèse avant édition, photos proposées dans le wizard, disponibilité guidée et accès aux réglages avancés.\n- Navigation en quatre espaces, actions de décision accessibles en pied, portraits autorisés dans les conversations et introductions allégées.\n- Actualisation immédiate au retour à l’accueil ou après modification de disponibilité ; chargement visible et protection des sessions/retours tardifs.\n\nInscription avec date de naissance privée, connexion, profil, récupération par clé et suppression utilisent le backend réel. Aucun faux membre ou mode simulation. Email reporté à la demande du propriétaire.\n\nLe contrôle humain de majorité, la revue photo, le recours indépendant et leurs opérations privées restent à mettre en service : les rencontres ne sont pas débloquées artificiellement. Tu peux préparer ton compte et ta localisation privée en attendant. Les photos non validées restent privées. La localisation Android en arrière-plan exige une activation séparée, un indicateur et dispose de Pause ; elle est limitée à la session et peut être interrompue par Android.\n\nLa carte reçoit IP et tuiles du secteur après accord ; cache locale souple20Mo, attribution OpenStreetMap/ODbL. Les rendus automatisés utilisent un fond de test, sans contacter les serveurs cartographiques. Validation sur téléphone, réception FCM et performances restent à faire. Cette release ne déclare pas tout le cahier des charges accepté.\n\nVérifications :699 tests backend,804 tests Flutter, analyse statique et9 cas HTTP réels passent.20 captures synthétiques ont été contrôlées.\n\nSources figées : `399620e`. APK signé, manifeste privé/HTTPS, signature existante, bibliothèques16K, assets et absence de clés serveur vérifiés avant publication.\n\nSHA256 de l’APK : `8e1253a0f91b224126e63ffdb34d701252a939d17525d0d9513f8fc95640845d`. Télécharger le fichier APK joint ; les archives « Source code » de GitHub ne sont pas l’application.\n'
+          RELEASE_NOTES = "# Meeko0.21.0 — Tes recherches, près de toi\n\nVersion Android connectée0.21.0+27, ARM64, Android7.0 minimum. Même signature pour mettre à jour le pilote existant.\n\n- Préférences privées dans le profil et le wizard : personnes recherchées séparément pour amour, amitié et activités. Plusieurs choix possibles, ou tout le monde.\n- Genre déclaré facultatif et privé. Aucun genre ou choix amoureux déduit pour les anciens comptes ; le choix amoureux doit être confirmé explicitement.\n- Rayon approximatif de5,10,20,30 ou50km. Les secteurs voisins peuvent produire une proposition ; le plus petit rayon des deux personnes s'applique. La localisation par zone conserve une marge d'incertitude, sans distance ni position individuelle affichée.\n- Les critères doivent fonctionner dans les deux sens, avec les intentions, âges, objectifs amoureux, accords et protections existants.\n- Les modifications annulent les invitations en attente et demandent d'actualiser la zone. Les conversations déjà acceptées restent accessibles.\n- Export des nouveaux choix sur demande explicite avec confirmation et mot de passe ; effacement lors de la suppression du compte. Contrôles accessibles FR/NL/EN, y compris grands caractères.\n- Correction d'un blocage concurrent du chat pendant l'activité du worker de recherche, sans modifier les autorisations ou la révocation.\n\nAprès installation : Mon profil → Mes préférences de recherche. Enregistre tes choix puis actualise ta zone dans Ma disponibilité. Les nouveaux comptes suivent le wizard. Les anciens clients n'effacent pas les nouveaux choix qu'ils omettent.\n\nInscription, connexion, récupération par clé, profil et suppression utilisent le backend réel. Aucun faux membre. Email toujours reporté à la demande du propriétaire. La localisation privée peut être préparée avant le contrôle de majorité ; l'arrière-plan exige une activation distincte et peut être interrompu par Android.\n\nLe contrôle humain18+, la revue photo et le recours indépendant restent à mettre en service. Aucun badge ou accès aux rencontres n'est accordé artificiellement. Les tests automatisés utilisent des comptes et cellules inventés ; réception FCM, batterie et expérience sur téléphone restent à vérifier. Cette release ne déclare pas tout le cahier des charges accepté.\n\nSources figées : `76ec370`. APK signé, signature existante, manifeste privé/HTTPS, bibliothèques16K, assets et absence de clés serveur vérifiés avant publication. Migration additive0029 avec conservation des colonnes et données précédentes.\n\nSHA256 APK : `39566dd7d417a53f8d03c96bbbec43345f6ec8b20d5a059f58a5b211b27efdf4`. Télécharger l'APK joint ; les archives « Source code » de GitHub ne sont pas l'application.\n"
           import hashlib
           import io
           import json
@@ -37,13 +37,13 @@ jobs:
           import zipfile
 
           REPO = "Jhamende/meeko_android_releases"
-          TAG = "v0.20.0-pilot.1"
-          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.20.0-pilot.1-arm64.zip"
-          BUNDLE_SHA = "b8b767d2f064ff91afb85f45f9d794b225fef7117095f1f924780f0ea1c68abb"
-          BUNDLE_BYTES = 16604286
-          APK = "meeko-0.20.0-pilot.1-arm64.apk"
+          TAG = "v0.21.0-pilot.1"
+          BUNDLE = "https://meeko.jh-it.be/releases/meeko-0.21.0-pilot.1-arm64.zip"
+          BUNDLE_SHA = "583c1d6338f3373129738ee29a49ba8bc665db732f1344d3f9858eec4ab77a66"
+          BUNDLE_BYTES = 16637238
+          APK = "meeko-0.21.0-pilot.1-arm64.apk"
           EXPECTED = {
-              APK: (28672685, "8e1253a0f91b224126e63ffdb34d701252a939d17525d0d9513f8fc95640845d"),
+              APK: (28803757, "39566dd7d417a53f8d03c96bbbec43345f6ec8b20d5a059f58a5b211b27efdf4"),
               "FONT_LICENSE.txt": (4387, "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"),
           }
           API = "https://api.github.com/repos/" + REPO
@@ -104,7 +104,7 @@ jobs:
           if release is None:
               release = api_request("POST", API + "/releases", {
                   "tag_name": TAG, "target_commitish": os.environ["GITHUB_SHA"],
-                  "name": "Meeko 0.20.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
+                  "name": "Meeko 0.21.0-pilot.1 — Android ARM64", "body": RELEASE_NOTES,
                   "draft": True, "prerelease": True, "make_latest": "false",
               })
           require(release["tag_name"] == TAG and release["prerelease"], "Unexpected release")
